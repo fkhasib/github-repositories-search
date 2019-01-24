@@ -11,3 +11,7 @@ To run in browser
 
 To produce watchable build directory to test as extension popup
 
+### `Chrome Extension Url`
+
+[https://chrome.google.com/webstore/detail/github-repository/ebeblcmfplmmedofjohlfmakdgahdoep](https://chrome.google.com/webstore/detail/github-repository/ebeblcmfplmmedofjohlfmakdgahdoep)
+

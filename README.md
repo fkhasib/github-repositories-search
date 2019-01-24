@@ -1,7 +1,7 @@
 
 ## Chrome Extension for searching github Repos
 
-Google Chrome Extension to Search Repositories by name
+Google Chrome Extension to Search Repositories by name, topic or owner username
 
 ### `yarn start`
 

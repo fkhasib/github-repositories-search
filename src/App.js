@@ -3,6 +3,13 @@ import React, { Component } from 'react';
 import './App.css';
 import {create} from 'apisauce'
 
+const SearchTypes = {
+  Name:1,
+  Topic:2,
+  Login:3,
+  ReadMe:4
+}
+
 class App extends Component {
 
   constructor(props){
@@ -12,14 +19,15 @@ class App extends Component {
       this.state = previousState
     else
       this.state={
-        repoName:null,
+        query:null,
         searching:false,
-        repos:[]
+        repos:[],
+        searchType:SearchTypes.Name
       }
   }
 
   searchRepo(){
-    const { repoName } = this.state
+    const { query,searchType } = this.state
      this.setState((prevState)=> {
                             return {...prevState,
                                     searching:true,
@@ -54,12 +62,23 @@ class App extends Component {
                       }
           })               
      }
-
-         create({
+     var qType = 'name'
+     switch(searchType){
+       case SearchTypes.Topic:
+          qType = 'topic';
+          break
+       case SearchTypes.Login:
+          qType = 'user';
+          break;
+        case SearchTypes.ReadMe:
+          qType = 'readme';
+          break;
+     }
+     create({
                 baseURL: `https://api.github.com`,
                  headers: {'Accept':'application/vnd.github.cloak-preview'}
               }).get(`/search/repositories`,{
-                q:`topic:${repoName.trim()}`,
+                q:`${qType}:${query.trim()}`,
               })
               .then( handleResponse)
               .catch(handleResponse);
@@ -67,10 +86,25 @@ class App extends Component {
 
   render() {
     localStorage.setItem('github-repo-data',JSON.stringify(this.state))
-    const { repoName,searching,repos } = this.state
-    const isValid = repoName!==null&&repoName.trim().length>0
+    const { query,searching,repos,searchType } = this.state
+    const isValid = query!==null&&query!==undefined&&query.trim().length>0
+    const type = searchType !== null ? searchType : SearchTypes.Name
     return (
       <div className="App">
+              <div className="menu">
+                <a href onClick={() =>  this.setState((prevState)=> {
+                            return {...prevState,searchType:SearchTypes.Name,repos:[]}
+                      })} className={type===SearchTypes.Name ? 'active' : ''}>Name</a>
+                <a href onClick={() =>  this.setState((prevState)=> {
+                            return {...prevState,searchType:SearchTypes.Topic,repos:[]}
+                      })} className={type===SearchTypes.Topic ? 'active' : ''}>Topic</a>
+                <a href onClick={() =>  this.setState((prevState)=> {
+                            return {...prevState,searchType:SearchTypes.Login,repos:[]}
+                      })} className={type===SearchTypes.Login ? 'active' : ''}>Username</a>
+                <a href onClick={() =>  this.setState((prevState)=> {
+                            return {...prevState,searchType:SearchTypes.ReadMe,repos:[]}
+                      })} className={type===SearchTypes.ReadMe ? 'active' : ''}>ReadMe</a>
+            </div>
             <form onSubmit={(e)=> {
                   e.preventDefault();
                     this.searchRepo()
@@ -78,11 +112,11 @@ class App extends Component {
               
                <div className="element-container">
                         <h1>Github Repo Search</h1>                
-                       <input name="repoName" type="text" placeholder="Type Repo Name" required value={repoName||''} onChange={(e) =>
+                       <input name="query" type="text" placeholder="Type query" required value={query||''} onChange={(e) =>
                         { 
-                          var newrepoName  = e.target.value
+                          var newquery  = e.target.value
                           this.setState((prevState)=> {
-                            return {...prevState,repoName:newrepoName,repos:[]}
+                            return {...prevState,query:newquery,repos:[]}
                       })}} />   
                      </div>
 

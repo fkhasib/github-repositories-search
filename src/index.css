@@ -10,6 +10,35 @@ body {
     padding:0px;
 }
 
+.menu{
+	display: flex;
+    justify-content: space-around;
+}
+
+.menu a{
+	display: block;
+	width: 24%;
+	background: #0b1e3d;
+	border:1px solid white;
+	color:white;
+    font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+.menu a:hover{
+	background: #f2f2f2;
+	border:1px solid #0b1e3d;
+	color:#0b1e3d;
+}
+
+.menu a.active{
+	background: white;
+	border:1px solid #0b1e3d;
+	color:#0b1e3d;
+}
+
 strong { font-weight: 700; }
 
 a, a:hover, a:focus {
@@ -36,7 +65,10 @@ h3 {
     font-weight: 700;
     line-height: 34px;
 }
-
+.App{
+    max-width: 500px;
+    margin:0 auto;
+}
 img { max-width: 100%; }
 
  form {
@@ -44,7 +76,6 @@ img { max-width: 100%; }
         border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
-    max-width: 500px;
 }
 
  form inputa {
@@ -95,6 +126,7 @@ form button{
 ul{
     list-style: none;
     padding-left: 0px;
+    margin-bottom: 0px;
 }
  
 .repo-row-language{

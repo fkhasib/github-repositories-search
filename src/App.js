@@ -26,6 +26,10 @@ class App extends Component {
       }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('github-repo-data',JSON.stringify(nextState))
+  }
+
   searchRepo(){
     const { query,searchType } = this.state
      this.setState((prevState)=> {
@@ -85,7 +89,6 @@ class App extends Component {
   }
 
   render() {
-    localStorage.setItem('github-repo-data',JSON.stringify(this.state))
     const { query,searching,repos,searchType } = this.state
     const isValid = query!==null&&query!==undefined&&query.trim().length>0
     const type = searchType !== null ? searchType : SearchTypes.Name
